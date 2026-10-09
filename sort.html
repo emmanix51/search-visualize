@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sort Visualizer — Bubble, Selection &amp; Insertion, line by line</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-head">
+  <nav class="nav">
+    <span class="brand"><span class="logo">&lt;/&gt;</span> Sort Visualizer</span>
+    <a class="navlink" href="index.html">Searching</a>
+    <a class="navlink" href="../Searching/index.html">&larr; Algorithms Lab</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">CC104 &middot; Sorting &middot; Live code tracer</span>
+    <h1>Watch the array rearrange itself</h1>
+    <p class="sub">Type an array. Every line of the Java method then highlights in the order it actually
+      executes, while the cells above show the array changing at that exact moment — comparisons in amber,
+      swaps and shifts in red, locked positions in green.</p>
+  </section>
+
+  <!-- Shared data. Applies to whichever tab is open. -->
+  <section class="settings" aria-label="Array to sort">
+    <div class="fld grow">
+      <label for="arrInput">Array</label>
+      <input type="text" id="arrInput" value="7, 3, 9, 4, 1" spellcheck="false" autocomplete="off"
+             placeholder="7, 3, 9, 4, 1">
+    </div>
+    <button class="btn primary" id="applyBtn">Apply</button>
+    <button class="btn ghost" id="randomBtn" title="Fill in a random array of the same length">&#127922; Randomize</button>
+  </section>
+  <p class="err" id="errMsg" role="alert"></p>
+  <p class="hint">Comma or space separated, integers only, up to 20 elements. Press <kbd>Enter</kbd> to apply.</p>
+
+  <nav class="tabs" role="tablist" aria-label="Algorithm">
+    <button class="tab active" id="tab-bubble" role="tab" aria-selected="true" aria-controls="pane-bubble" data-algo="bubble">
+      <span class="dot bub"></span>Bubble Sort <em>O(n&sup2;)</em>
+    </button>
+    <button class="tab" id="tab-selection" role="tab" aria-selected="false" aria-controls="pane-selection" data-algo="selection">
+      <span class="dot sel"></span>Selection Sort <em>O(n&sup2;)</em>
+    </button>
+    <button class="tab" id="tab-insertion" role="tab" aria-selected="false" aria-controls="pane-insertion" data-algo="insertion">
+      <span class="dot ins"></span>Insertion Sort <em>O(n&sup2;)</em>
+    </button>
+  </nav>
+
+  <!-- ───────────────────────── Bubble Sort ───────────────────────── -->
+  <section class="pane active" id="pane-bubble" data-algo="bubble" role="tabpanel" aria-labelledby="tab-bubble">
+    <div class="pane-body">
+      <div class="left">
+        <div class="stage">
+          <span class="stage-label">Each pass bubbles the largest remaining value to the right</span>
+          <div class="mk" data-role="markers"></div>
+          <div class="cells" data-role="cells"></div>
+          <div class="ix" data-role="indices"></div>
+        </div>
+
+        <div class="narration" data-role="narration">
+          <span class="narr-text" data-role="narrtext"></span>
+          <span class="var-chip" data-role="varchip" hidden></span>
+        </div>
+
+        <div class="progress">
+          <span class="pill" data-role="stepcount">Step 0 of 0</span>
+        </div>
+
+        <div class="controls">
+          <button class="btn ghost" data-role="back">&larr; Back</button>
+          <button class="btn primary" data-role="step">Step &rarr;</button>
+          <button class="btn ghost" data-role="restart">Restart</button>
+          <span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; <kbd>R</kbd> restart &middot; <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> tab</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="code">
+          <div class="code-head">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">BubbleSort.java &mdash; the line being executed</span>
+          </div>
+          <div class="code-body" data-role="code"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Selection Sort ───────────────────────── -->
+  <section class="pane" id="pane-selection" data-algo="selection" role="tabpanel" aria-labelledby="tab-selection" hidden>
+    <div class="pane-body">
+      <div class="left">
+        <div class="stage">
+          <span class="stage-label">Each pass finds the smallest remaining value and moves it left</span>
+          <div class="mk" data-role="markers"></div>
+          <div class="cells" data-role="cells"></div>
+          <div class="ix" data-role="indices"></div>
+        </div>
+
+        <div class="narration" data-role="narration">
+          <span class="narr-text" data-role="narrtext"></span>
+          <span class="var-chip" data-role="varchip" hidden></span>
+        </div>
+
+        <div class="progress">
+          <span class="pill" data-role="stepcount">Step 0 of 0</span>
+        </div>
+
+        <div class="controls">
+          <button class="btn ghost" data-role="back">&larr; Back</button>
+          <button class="btn primary" data-role="step">Step &rarr;</button>
+          <button class="btn ghost" data-role="restart">Restart</button>
+          <span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; <kbd>R</kbd> restart &middot; <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> tab</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="code">
+          <div class="code-head">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">SelectionSort.java &mdash; the line being executed</span>
+          </div>
+          <div class="code-body" data-role="code"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Insertion Sort ───────────────────────── -->
+  <section class="pane" id="pane-insertion" data-algo="insertion" role="tabpanel" aria-labelledby="tab-insertion" hidden>
+    <div class="pane-body">
+      <div class="left">
+        <div class="stage">
+          <span class="stage-label">Each new value slides left into the sorted prefix</span>
+          <div class="mk" data-role="markers"></div>
+          <div class="cells" data-role="cells"></div>
+          <div class="ix" data-role="indices"></div>
+        </div>
+
+        <div class="narration" data-role="narration">
+          <span class="narr-text" data-role="narrtext"></span>
+          <span class="var-chip" data-role="varchip" hidden></span>
+        </div>
+
+        <div class="progress">
+          <span class="pill" data-role="stepcount">Step 0 of 0</span>
+        </div>
+
+        <div class="controls">
+          <button class="btn ghost" data-role="back">&larr; Back</button>
+          <button class="btn primary" data-role="step">Step &rarr;</button>
+          <button class="btn ghost" data-role="restart">Restart</button>
+          <span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; <kbd>R</kbd> restart &middot; <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> tab</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="code">
+          <div class="code-head">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">InsertionSort.java &mdash; the line being executed</span>
+          </div>
+          <div class="code-body" data-role="code"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Runs entirely in the browser &mdash; no server, no dependencies. The Java shown is the same code the tracer executes.
+</footer>
+
+<script src="sort.js"></script>
+</body>
+</html>

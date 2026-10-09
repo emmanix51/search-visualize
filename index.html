@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Visualizer — Linear &amp; Binary, line by line</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-head">
+  <nav class="nav">
+    <span class="brand"><span class="logo">&lt;/&gt;</span> Search Visualizer</span>
+    <a class="navlink" href="sort.html">Sorting</a>
+    <a class="navlink" href="../Searching/index.html">&larr; Algorithms Lab</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">CC104 &middot; Searching &middot; Live code tracer</span>
+    <h1>Follow the code, line by line</h1>
+    <p class="sub">Type an array and a target. Every line of the Java method then highlights in the order it
+      actually executes, while the array above shows exactly what the program is doing at that moment.</p>
+  </section>
+
+  <!-- Shared data. Applies to whichever tab is open. -->
+  <section class="settings" aria-label="Search data">
+    <div class="fld grow">
+      <label for="arrInput">Array</label>
+      <input type="text" id="arrInput" value="2, 5, 8, 12, 19, 23, 31, 44" spellcheck="false" autocomplete="off"
+             placeholder="2, 5, 8, 12, 19">
+    </div>
+    <div class="fld target">
+      <label for="targetInput">Target</label>
+      <input type="text" id="targetInput" value="19" spellcheck="false" autocomplete="off" placeholder="19">
+    </div>
+    <button class="btn primary" id="applyBtn">Apply</button>
+    <button class="btn ghost" id="sortBtn" title="Sort the array ascending, then re-run">&uarr; Sort array</button>
+  </section>
+  <p class="err" id="errMsg" role="alert"></p>
+  <p class="hint">Comma or space separated, integers only, up to 24 elements. Press <kbd>Enter</kbd> to apply.</p>
+
+  <nav class="tabs" role="tablist" aria-label="Algorithm">
+    <button class="tab active" id="tab-linear" role="tab" aria-selected="true" aria-controls="pane-linear" data-algo="linear">
+      <span class="dot lin"></span>Linear Search <em>O(n)</em>
+    </button>
+    <button class="tab" id="tab-binary" role="tab" aria-selected="false" aria-controls="pane-binary" data-algo="binary">
+      <span class="dot bin"></span>Binary Search <em>O(log n)</em>
+    </button>
+  </nav>
+
+  <!-- ───────────────────────── Linear Search ───────────────────────── -->
+  <section class="pane active" id="pane-linear" data-algo="linear" role="tabpanel" aria-labelledby="tab-linear">
+    <div class="preset-row">
+      <span class="lbl">Demos</span>
+      <button class="btn ghost sm" data-preset="linear-found">Found at index 3</button>
+      <button class="btn ghost sm" data-preset="linear-missing">Not in the array</button>
+    </div>
+
+    <div class="pane-body">
+      <div class="left">
+        <div class="stage">
+          <span class="stage-label">Unsorted data is fine &middot; the pointer walks left &rarr; right</span>
+          <div class="mk" data-role="markers"></div>
+          <div class="cells" data-role="cells"></div>
+          <div class="ix" data-role="indices"></div>
+        </div>
+
+        <div class="narration" data-role="narration"></div>
+
+        <div class="progress">
+          <span class="pill" data-role="stepcount">Step 0 of 0</span>
+          <span class="pill" data-role="cmpcount">comparisons: 0</span>
+        </div>
+
+        <div class="controls">
+          <button class="btn ghost" data-role="back">&larr; Back</button>
+          <button class="btn primary" data-role="step">Step &rarr;</button>
+          <button class="btn ghost" data-role="restart">Restart</button>
+          <span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; <kbd>R</kbd> restart &middot; <kbd>1</kbd><kbd>2</kbd> tab</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="code">
+          <div class="code-head">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">LinearSearch.java &mdash; the line being executed</span>
+          </div>
+          <div class="code-body" data-role="code"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Binary Search ───────────────────────── -->
+  <section class="pane" id="pane-binary" data-algo="binary" role="tabpanel" aria-labelledby="tab-binary" hidden>
+    <div class="preset-row">
+      <span class="lbl">Demos</span>
+      <button class="btn ghost sm" data-preset="binary-found">Found at index 5</button>
+      <button class="btn ghost sm" data-preset="binary-missing">Not in the array</button>
+    </div>
+
+    <div class="pane-body">
+      <div class="left">
+        <div class="stage">
+          <span class="stage-label">Sorted data required &middot; the window <b>L</b>&hellip;<b>H</b> halves every step</span>
+          <div class="mk" data-role="markers"></div>
+          <div class="cells" data-role="cells"></div>
+          <div class="ix" data-role="indices"></div>
+        </div>
+
+        <div class="narration" data-role="narration"></div>
+
+        <div class="progress">
+          <span class="pill" data-role="stepcount">Step 0 of 0</span>
+          <span class="pill" data-role="cmpcount">comparisons: 0</span>
+        </div>
+
+        <div class="controls">
+          <button class="btn ghost" data-role="back">&larr; Back</button>
+          <button class="btn primary" data-role="step">Step &rarr;</button>
+          <button class="btn ghost" data-role="restart">Restart</button>
+          <span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd> step &middot; <kbd>R</kbd> restart &middot; <kbd>1</kbd><kbd>2</kbd> tab</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="code">
+          <div class="code-head">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">BinarySearch.java &mdash; the line being executed</span>
+          </div>
+          <div class="code-body" data-role="code"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Runs entirely in the browser &mdash; no server, no dependencies. The Java shown is the same code the tracer executes.
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
