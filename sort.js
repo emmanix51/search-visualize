@@ -30,44 +30,68 @@
      ------------------------------------------------------------ */
   var JAVA = {
     bubble: [
-      'public static void bubbleSort(int[] arr) {',
-      '    int n = arr.length;',
-      '    for (int i = 0; i < n - 1; i++) {',
-      '        for (int j = 0; j < n - 1 - i; j++) {',
-      '            if (arr[j] > arr[j + 1]) {',
-      '                int temp = arr[j];',
-      '                arr[j] = arr[j + 1];',
-      '                arr[j + 1] = temp;',
+      'public class Main {',
+      '',
+      '    public static void bubbleSort(int[] arr) {',
+      '        int n = arr.length;',
+      '        for (int i = 0; i < n - 1; i++) {',
+      '            for (int j = 0; j < n - 1 - i; j++) {',
+      '                if (arr[j] > arr[j + 1]) {',
+      '                    int temp = arr[j];',
+      '                    arr[j] = arr[j + 1];',
+      '                    arr[j + 1] = temp;',
+      '                }',
       '            }',
       '        }',
+      '    }',
+      '',
+      '    public static void main(String[] args) {',
+      '        int[] arr = {7, 3, 9, 4, 1};',
+      '        bubbleSort(arr);',
       '    }',
       '}'
     ],
     selection: [
-      'public static void selectionSort(int[] arr) {',
-      '    int n = arr.length;',
-      '    for (int i = 0; i < n - 1; i++) {',
-      '        int minIdx = i;',
-      '        for (int j = i + 1; j < n; j++) {',
-      '            if (arr[j] < arr[minIdx]) minIdx = j;',
+      'public class Main {',
+      '',
+      '    public static void selectionSort(int[] arr) {',
+      '        int n = arr.length;',
+      '        for (int i = 0; i < n - 1; i++) {',
+      '            int minIdx = i;',
+      '            for (int j = i + 1; j < n; j++) {',
+      '                if (arr[j] < arr[minIdx]) minIdx = j;',
+      '            }',
+      '            int temp = arr[i];',
+      '            arr[i] = arr[minIdx];',
+      '            arr[minIdx] = temp;',
       '        }',
-      '        int temp = arr[i];',
-      '        arr[i] = arr[minIdx];',
-      '        arr[minIdx] = temp;',
+      '    }',
+      '',
+      '    public static void main(String[] args) {',
+      '        int[] arr = {7, 3, 9, 4, 1};',
+      '        selectionSort(arr);',
       '    }',
       '}'
     ],
     insertion: [
-      'public static void insertionSort(int[] arr) {',
-      '    int n = arr.length;',
-      '    for (int i = 1; i < n; i++) {',
-      '        int key = arr[i];',
-      '        int j = i - 1;',
-      '        while (j >= 0 && arr[j] > key) {',
-      '            arr[j + 1] = arr[j];',
-      '            j--;',
+      'public class Main {',
+      '',
+      '    public static void insertionSort(int[] arr) {',
+      '        int n = arr.length;',
+      '        for (int i = 1; i < n; i++) {',
+      '            int key = arr[i];',
+      '            int j = i - 1;',
+      '            while (j >= 0 && arr[j] > key) {',
+      '                arr[j + 1] = arr[j];',
+      '                j--;',
+      '            }',
+      '            arr[j + 1] = key;',
       '        }',
-      '        arr[j + 1] = key;',
+      '    }',
+      '',
+      '    public static void main(String[] args) {',
+      '        int[] arr = {7, 3, 9, 4, 1};',
+      '        insertionSort(arr);',
       '    }',
       '}'
     ]
@@ -116,64 +140,65 @@
       t.push(e);
     }
 
+    var M = 2;
     var n = arr.length;
-    emit(0, 'bubbleSort(arr) is called with an array of ' + n +
+    emit(M + 0, 'bubbleSort(arr) is called with an array of ' + n +
             ' element' + (n === 1 ? '' : 's') + '. It will be sorted in place.', snap());
-    emit(1, 'int n = arr.length = ' + n + '.', snap());
+    emit(M + 1, 'int n = arr.length = ' + n + '.', snap());
 
     for (var i = 0; i < n - 1; i++) {
       var locked = idxRange(Math.max(n - i, 0), n);
-      emit(2, 'Outer pass i = ' + i + '. Check i < n - 1: ' + i + ' < ' + (n - 1) +
+      emit(M + 2, 'Outer pass i = ' + i + '. Check i < n - 1: ' + i + ' < ' + (n - 1) +
               ' is true, so run the pass.' +
               (i > 0 ? ' The last ' + i + ' element' + (i === 1 ? '' : 's') + ' are already locked (green).' : ''),
            snap({ sorted: locked }));
 
       var limit = n - 1 - i;
       for (var j = 0; j < limit; j++) {
-        emit(3, 'Inner: check j < n - 1 - i: ' + j + ' < ' + limit + ' is true.',
+        emit(M + 3, 'Inner: check j < n - 1 - i: ' + j + ' < ' + limit + ' is true.',
              snap({ sorted: locked, mk: marks2(j, 'j', j + 1, 'j+1') }));
 
         var a = arr[j], b = arr[j + 1];
         var doSwap = a > b;
-        emit(4, 'Compare arr[' + j + '] = ' + a + ' with arr[' + (j + 1) + '] = ' + b + ': ' +
+        emit(M + 4, 'Compare arr[' + j + '] = ' + a + ' with arr[' + (j + 1) + '] = ' + b + ': ' +
                 a + ' > ' + b + ' is ' + doSwap + ', so ' +
                 (doSwap ? 'the pair is out of order — swap them.' : 'they are already in order — leave them.'),
              snap({ sorted: locked, cmp: [j, j + 1], mk: marks2(j, 'j', j + 1, 'j+1') }), true);
 
         if (doSwap) {
-          emit(5, 'int temp = arr[' + j + '] = ' + a + ' — hold the left value so it is not overwritten.',
+          emit(M + 5, 'int temp = arr[' + j + '] = ' + a + ' — hold the left value so it is not overwritten.',
                snap({ sorted: locked, swp: [j, j + 1], varName: 'temp', varValue: a,
                       mk: marks2(j, 'j', j + 1, 'j+1') }));
           arr[j] = arr[j + 1];
-          emit(6, 'arr[' + j + '] = arr[' + (j + 1) + '] — position ' + j + ' now also holds ' + arr[j] +
+          emit(M + 6, 'arr[' + j + '] = arr[' + (j + 1) + '] — position ' + j + ' now also holds ' + arr[j] +
                   ' (a temporary duplicate).',
                snap({ sorted: locked, swp: [j, j + 1], varName: 'temp', varValue: a,
                       mk: marks2(j, 'j', j + 1, 'j+1') }), false, true);
           arr[j + 1] = a;
-          emit(7, 'arr[' + (j + 1) + '] = temp — position ' + (j + 1) + ' now holds ' + a + '. The swap is complete.',
+          emit(M + 7, 'arr[' + (j + 1) + '] = temp — position ' + (j + 1) + ' now holds ' + a + '. The swap is complete.',
                snap({ sorted: locked, swp: [j, j + 1], varName: 'temp', varValue: a,
                       mk: marks2(j, 'j', j + 1, 'j+1') }), false, true);
-          emit(8, 'Close the if block and move to the next pair.',
+          emit(M + 8, 'Close the if block and move to the next pair.',
                snap({ sorted: locked, mk: marks2(j, 'j', j + 1, 'j+1') }));
         } else {
-          emit(8, 'The condition was false, so nothing inside the if ran. Move to the next pair.',
+          emit(M + 8, 'The condition was false, so nothing inside the if ran. Move to the next pair.',
                snap({ sorted: locked, cmp: [j, j + 1], mk: marks2(j, 'j', j + 1, 'j+1') }));
         }
       }
 
-      emit(3, 'Inner: check j < n - 1 - i: ' + limit + ' < ' + limit +
+      emit(M + 3, 'Inner: check j < n - 1 - i: ' + limit + ' < ' + limit +
               ' is false, so the inner loop ends.', snap({ sorted: locked }));
 
       var newLocked = idxRange(n - 1 - i, n);
-      emit(9, 'Close the inner for block. The largest remaining value has bubbled to index ' +
+      emit(M + 9, 'Close the inner for block. The largest remaining value has bubbled to index ' +
               (n - 1 - i) + ' — it is now locked (green).', snap({ sorted: newLocked }));
     }
 
     var all = idxRange(0, n);
-    emit(2, 'Outer: check i < n - 1: ' + (n - 1) + ' < ' + (n - 1) +
+    emit(M + 2, 'Outer: check i < n - 1: ' + (n - 1) + ' < ' + (n - 1) +
             ' is false, so the outer loop ends.', snap({ sorted: all }));
-    emit(10, 'Close the outer for block. Every element is in its final position.', snap({ sorted: all }));
-    emit(11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ sorted: all }));
+    emit(M + 10, 'Close the outer for block. Every element is in its final position.', snap({ sorted: all }));
+    emit(M + 11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ sorted: all }));
     return t;
   }
 
@@ -188,64 +213,65 @@
       t.push(e);
     }
 
+    var M = 2;
     var n = arr.length;
-    emit(0, 'selectionSort(arr) is called with an array of ' + n +
+    emit(M + 0, 'selectionSort(arr) is called with an array of ' + n +
             ' element' + (n === 1 ? '' : 's') + '. It will be sorted in place.', snap());
-    emit(1, 'int n = arr.length = ' + n + '.', snap());
+    emit(M + 1, 'int n = arr.length = ' + n + '.', snap());
 
     for (var i = 0; i < n - 1; i++) {
       var locked = idxRange(0, i);
-      emit(2, 'Outer pass i = ' + i + '. Check i < n - 1: ' + i + ' < ' + (n - 1) +
+      emit(M + 2, 'Outer pass i = ' + i + '. Check i < n - 1: ' + i + ' < ' + (n - 1) +
               ' is true, so run the pass.' +
               (i > 0 ? ' The first ' + i + ' element' + (i === 1 ? '' : 's') + ' are already sorted (green).' : ''),
            snap({ sorted: locked }));
 
       var minIdx = i;
-      emit(3, 'int minIdx = ' + i + ' — assume the smallest value of the unsorted part is at position ' + i + '.',
+      emit(M + 3, 'int minIdx = ' + i + ' — assume the smallest value of the unsorted part is at position ' + i + '.',
            snap({ sorted: locked, minIdx: minIdx, mk: marks1(i, 'min') }));
 
       for (var j = i + 1; j < n; j++) {
-        emit(4, 'Inner: check j < n: ' + j + ' < ' + n + ' is true.',
+        emit(M + 4, 'Inner: check j < n: ' + j + ' < ' + n + ' is true.',
              snap({ sorted: locked, minIdx: minIdx, mk: marks2(j, 'j', minIdx, 'min') }));
 
         var less = arr[j] < arr[minIdx];
-        emit(5, 'Compare arr[' + j + '] = ' + arr[j] + ' with the current minimum arr[' + minIdx + '] = ' + arr[minIdx] +
+        emit(M + 5, 'Compare arr[' + j + '] = ' + arr[j] + ' with the current minimum arr[' + minIdx + '] = ' + arr[minIdx] +
                 ': ' + arr[j] + ' < ' + arr[minIdx] + ' is ' + less + ', so ' +
                 (less ? 'this is a new smallest value — remember it.' : 'the current minimum is still the smallest.'),
              snap({ sorted: locked, cmp: [j, minIdx], minIdx: minIdx, mk: marks2(j, 'j', minIdx, 'min') }), true);
 
         if (less) {
           minIdx = j;
-          emit(5, 'minIdx = ' + j + ' — position ' + j + ' is now the smallest value seen so far.',
+          emit(M + 5, 'minIdx = ' + j + ' — position ' + j + ' is now the smallest value seen so far.',
                snap({ sorted: locked, minIdx: minIdx, mk: marks1(minIdx, 'min') }));
         }
       }
 
-      emit(4, 'Inner: check j < n: ' + n + ' < ' + n + ' is false, so the scan ends.',
+      emit(M + 4, 'Inner: check j < n: ' + n + ' < ' + n + ' is false, so the scan ends.',
            snap({ sorted: locked, minIdx: minIdx, mk: marks1(minIdx, 'min') }));
-      emit(6, 'Close the inner for block. arr[' + minIdx + '] = ' + arr[minIdx] +
+      emit(M + 6, 'Close the inner for block. arr[' + minIdx + '] = ' + arr[minIdx] +
               ' is the smallest of the unsorted part; move it to position ' + i + '.',
            snap({ sorted: locked, minIdx: minIdx, mk: marks1(minIdx, 'min') }));
 
       var tmp = arr[i];
-      emit(7, 'int temp = arr[' + i + '] = ' + tmp + ' — save the value currently at position ' + i + '.',
+      emit(M + 7, 'int temp = arr[' + i + '] = ' + tmp + ' — save the value currently at position ' + i + '.',
            snap({ sorted: locked, minIdx: minIdx, varName: 'temp', varValue: tmp,
                   mk: marks2(i, 'i', minIdx, 'min') }));
       arr[i] = arr[minIdx];
-      emit(8, 'arr[' + i + '] = arr[' + minIdx + '] — position ' + i + ' now holds the smallest value ' + arr[i] + '.',
+      emit(M + 8, 'arr[' + i + '] = arr[' + minIdx + '] — position ' + i + ' now holds the smallest value ' + arr[i] + '.',
            snap({ sorted: locked, swp: [i, minIdx], varName: 'temp', varValue: tmp,
                   mk: marks2(i, 'i', minIdx, 'min') }), false, true);
       arr[minIdx] = tmp;
-      emit(9, 'arr[' + minIdx + '] = temp — position ' + minIdx + ' now holds ' + tmp + '. The swap is complete.',
+      emit(M + 9, 'arr[' + minIdx + '] = temp — position ' + minIdx + ' now holds ' + tmp + '. The swap is complete.',
            snap({ sorted: locked, swp: [i, minIdx], varName: 'temp', varValue: tmp,
                   mk: marks2(i, 'i', minIdx, 'min') }), false, true);
     }
 
     var all = idxRange(0, n);
-    emit(2, 'Outer: check i < n - 1: ' + (n - 1) + ' < ' + (n - 1) +
+    emit(M + 2, 'Outer: check i < n - 1: ' + (n - 1) + ' < ' + (n - 1) +
             ' is false, so the outer loop ends.', snap({ sorted: all }));
-    emit(10, 'Close the outer for block. Every element is sorted.', snap({ sorted: all }));
-    emit(11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ sorted: all }));
+    emit(M + 10, 'Close the outer for block. Every element is sorted.', snap({ sorted: all }));
+    emit(M + 11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ sorted: all }));
     return t;
   }
 
@@ -260,63 +286,64 @@
       t.push(e);
     }
 
+    var M = 2;
     var n = arr.length;
-    emit(0, 'insertionSort(arr) is called with an array of ' + n +
+    emit(M + 0, 'insertionSort(arr) is called with an array of ' + n +
             ' element' + (n === 1 ? '' : 's') + '. It will be sorted in place.', snap());
-    emit(1, 'int n = arr.length = ' + n + '.', snap());
+    emit(M + 1, 'int n = arr.length = ' + n + '.', snap());
 
     for (var i = 1; i < n; i++) {
       var regionBefore = idxRange(0, i);
-      emit(2, 'Outer pass i = ' + i + '. Check i < n: ' + i + ' < ' + n +
+      emit(M + 2, 'Outer pass i = ' + i + '. Check i < n: ' + i + ' < ' + n +
               ' is true. The prefix arr[0..' + (i - 1) + '] is already sorted; element ' + i + ' is next to insert.',
            snap({ region: regionBefore }));
 
       var key = arr[i];
-      emit(3, 'int key = arr[' + i + '] = ' + key + ' — pull this value out so the cells can slide over it.',
+      emit(M + 3, 'int key = arr[' + i + '] = ' + key + ' — pull this value out so the cells can slide over it.',
            snap({ region: regionBefore, varName: 'key', varValue: key, mk: marks1(i, 'key') }));
 
       var j = i - 1;
-      emit(4, 'int j = i - 1 = ' + j + ' — start scanning the sorted prefix from its right end.',
+      emit(M + 4, 'int j = i - 1 = ' + j + ' — start scanning the sorted prefix from its right end.',
            snap({ region: regionBefore, varName: 'key', varValue: key, j: j, mk: marks1(j, 'j') }));
 
       while (true) {
         if (j >= 0) {
           var gt = arr[j] > key;
-          emit(5, 'Check j >= 0 && arr[j] > key: ' + j + ' >= 0 is true, and arr[' + j + '] = ' + arr[j] +
+          emit(M + 5, 'Check j >= 0 && arr[j] > key: ' + j + ' >= 0 is true, and arr[' + j + '] = ' + arr[j] +
                   ' > ' + key + ' is ' + gt + ', so ' +
                   (gt ? 'slide it one slot to the right.' : 'this is where the key belongs — stop scanning.'),
                snap({ region: regionBefore, varName: 'key', varValue: key, cmp: [j], j: j, mk: marks1(j, 'j') }), true);
           if (!gt) break;
 
           arr[j + 1] = arr[j];
-          emit(6, 'arr[' + (j + 1) + '] = arr[' + j + '] — ' + arr[j] + ' slides one slot to the right.',
+          emit(M + 6, 'arr[' + (j + 1) + '] = arr[' + j + '] — ' + arr[j] + ' slides one slot to the right.',
                snap({ region: regionBefore, varName: 'key', varValue: key, shift: [j + 1], j: j,
                       mk: marks1(j, 'j') }), false, true);
           j--;
-          emit(7, 'j-- — j is now ' + j + '.',
+          emit(M + 7, 'j-- — j is now ' + j + '.',
                snap({ region: regionBefore, varName: 'key', varValue: key, j: j,
                       mk: j >= 0 ? marks1(j, 'j') : {} }));
         } else {
-          emit(5, 'Check j >= 0 && arr[j] > key: ' + j + ' >= 0 is false, so the while stops here. ' +
+          emit(M + 5, 'Check j >= 0 && arr[j] > key: ' + j + ' >= 0 is false, so the while stops here. ' +
                   'Java short-circuits — arr[' + j + '] is never read.',
                snap({ region: regionBefore, varName: 'key', varValue: key, j: j }));
           break;
         }
       }
 
-      emit(8, 'Close the while block.',
+      emit(M + 8, 'Close the while block.',
            snap({ region: regionBefore, varName: 'key', varValue: key, j: j }));
       arr[j + 1] = key;
-      emit(9, 'arr[' + (j + 1) + '] = key — drop ' + key + ' into position ' + (j + 1) +
+      emit(M + 9, 'arr[' + (j + 1) + '] = key — drop ' + key + ' into position ' + (j + 1) +
               '. The sorted prefix now covers arr[0..' + i + '].',
            snap({ region: idxRange(0, i + 1), varName: 'key', varValue: key, mk: marks1(j + 1, 'key') }), false, true);
     }
 
     var all = idxRange(0, n);
-    emit(2, 'Outer: check i < n: ' + n + ' < ' + n + ' is false, so the outer loop ends.',
+    emit(M + 2, 'Outer: check i < n: ' + n + ' < ' + n + ' is false, so the outer loop ends.',
          snap({ region: all }));
-    emit(10, 'Close the outer for block. Every element has been inserted into place.', snap({ region: all }));
-    emit(11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ region: all }));
+    emit(M + 10, 'Close the outer for block. Every element has been inserted into place.', snap({ region: all }));
+    emit(M + 11, 'The method returns void — the array is sorted in place: ' + arr.join(', ') + '.', snap({ region: all }));
     return t;
   }
 
@@ -325,7 +352,7 @@
   /* ------------------------------------------------------------
      3. JAVA SYNTAX HIGHLIGHTING — single pass so spans never nest.
      ------------------------------------------------------------ */
-  var TOKENS = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(public|static|class|void|int|boolean|return|if|else|for|while|new|true|false|null)\b|\b(arr|minIdx|temp|length|key|n|i|j)\b|\b(\d+)\b/g;
+  var TOKENS = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|\b(public|static|class|void|int|boolean|return|if|else|for|while|new|true|false|null|String|args|System|out|println|Arrays|toString)\b|\b(arr|minIdx|temp|length|key|n|i|j)\b|\b(\d+)\b/g;
 
   function esc(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
